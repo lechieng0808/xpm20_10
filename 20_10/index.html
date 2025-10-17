@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chúc Mừng 20/10 Các Bạn Nữ!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            overflow-x: hidden;
+        }
+        body::after {
+            position: absolute; 
+            width: 0; 
+            height: 0; 
+            overflow: hidden; 
+            z-index: -1;
+            content: url('https://placehold.co/1920x1080/2b2538/e0c3fc?text=Thay+Anh+Nen+Cua+Ban+O+Day');
+        }
+
+        /* === TỐI ƯU HÓA ANIMATION === */
+        .girl-card-container {
+            position: relative;
+            width: 295px;
+            height: 393px;
+            margin: 12px;
+            transition: transform 0.5s ease, z-index 0.5s ease;
+            box-shadow: 0 4px 8px rgba(243, 189, 189, 0.15);
+            transform-origin: bottom center;
+            will-change: transform, z-index;
+        }
+        .girl-card {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 4px solid white;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transform-origin: bottom center;
+            will-change: transform;
+        }
+        .girl-card-container:hover {
+            z-index: 100 !important;
+        }
+        .girl-card-container:hover .girl-card {
+            transform: scale(1.1) translateY(-10px);
+            box-shadow: 0 15px 30px rgba(230, 73, 128, 0.5);
+        }
+        .girl-card-container::after {
+            content: var(--flower-emoji);
+            position: absolute;
+            top: 0;
+            right: 0;
+            transform: translate(30%, -30%);
+            font-size: 2em;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 10;
+            animation: pulse 1.5s infinite ease-in-out;
+            will-change: transform;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1) translate(30%, -30%); }
+            50% { transform: scale(1.1) translate(30%, -30%); }
+        }
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #e64980;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .falling-flower {
+            position: absolute;
+            top: -50px;
+            font-size: 2rem;
+            animation: fall linear infinite;
+            user-select: none;
+            pointer-events: none;
+            z-index: 9999;
+            will-change: transform, top;
+        }
+        @keyframes fall {
+            to {
+                top: 105vh;
+                transform: rotate(360deg);
+            }
+        }
+        .memory-photo-container {
+            position: absolute;
+            transform-origin: bottom center;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), z-index 0.4s;
+            cursor: pointer;
+            will-change: transform, z-index;
+        }
+        .memory-photo {
+            border: 5px solid white;
+            border-radius: 4px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+        }
+        #modal-image {
+            animation: zoomIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        @keyframes zoomIn {
+            from { transform: scale(0.7); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        #thank-you-screen {
+            background-image: url('https://i.postimg.cc/CLwrWpdy/No-script-just-memories-XPM-1.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        @keyframes scroll {
+            from { transform: translateX(0); }
+            to { transform: translateX(calc(-50% - 0.75rem)); }
+        }
+        #mini-carousel-track {
+            gap: 1.5rem;
+            padding: 1rem 0;
+            will-change: transform;
+        }
+        #mini-carousel-track.animate-scroll {
+            animation: scroll 20s linear infinite;
+        }
+        #mini-carousel-track img {
+            height: 210px;
+            width: auto;
+            border-radius: 12px;
+            border: 4px solid white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        #wish-prompt {
+            transition: opacity 0.5s ease-in-out;
+        }
+        #envelope-container {
+            position: relative;
+            width: 90vw;
+            max-width: 1200px;
+            height: calc(90vw * 0.65);
+            max-height: 750px;
+            transition: transform 1s ease-in-out, opacity 1s ease-in-out;
+            cursor: pointer;
+            will-change: transform, opacity;
+        }
+        #envelope-back {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #FFF3E2;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        #envelope-flap {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 55%;
+            background-color: #FFD7BA;
+            transform-origin: top center;
+            clip-path: polygon(0 0, 100% 0, 50% 100%);
+            transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            z-index: 10;
+            will-change: transform;
+        }
+        #wish-card {
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(0.8);
+            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s;
+            will-change: transform, opacity, visibility;
+        }
+        #wish-screen.open #wish-prompt {
+            opacity: 0;
+            pointer-events: none;
+        }
+        #wish-screen.open #envelope-flap {
+            transform: rotateX(180deg);
+        }
+        #wish-screen.open #envelope-container {
+            opacity: 0;
+            transform: translateY(-100px);
+            pointer-events: none;
+        }
+        #wish-screen.open #wish-card {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
+        }
+        @keyframes fallIn {
+          from { opacity: 0; transform: translateY(-15px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .word-fall-in {
+            display: inline-block;
+            opacity: 0;
+            animation: fallIn 0.5s ease forwards;
+            will-change: transform, opacity;
+        }
+        #deny-gift-button {
+            transition: transform 0.3s ease, background-color 0.3s ease, top 0.5s ease, left 0.5s ease;
+        }
+
+        /* === CSS CHO MÀN HÌNH TRÁI TIM === */
+        #heart-svg-container {
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        #heart-svg-container:active {
+            transform: scale(0.9);
+        }
+        #clip-rect {
+            transition: y 0.2s ease-in-out;
+        }
+        #heart-fill-screen.fade-out {
+            opacity: 0;
+            transform: scale(0.8);
+        }
+        .falling-heart {
+            position: absolute;
+            top: -10%;
+            user-select: none;
+            font-size: 2rem;
+            animation: fall-heart linear forwards;
+            pointer-events: none;
+        }
+        @keyframes fall-heart {
+            to {
+                transform: translateY(110vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <audio id="background-music" loop preload="auto">
+        <source src="https://files.catbox.moe/5gaece.mp3" type="audio/mpeg">
+        Trình duyệt của bạn không hỗ trợ phát nhạc.
+    </audio>
+
+    <div id="falling-flower-container" class="fixed inset-0 overflow-hidden pointer-events-none"></div>
+
+    <div id="gift-screen" class="min-h-screen w-full flex flex-col items-center justify-center p-4 text-center">
+        <div id="gift-card" class="relative bg-white rounded-2xl shadow-xl p-8 md:p-12 w-11/12 md:w-1/2 lg:max-w-2xl transition-all duration-300">
+            <h2 class="text-3xl md:text-5xl font-bold text-pink-600 mb-4">Bạn ơi, bạn sắp có một món quà cực kì xinh xĩu đấy...</h2>
+            <p class="text-gray-600 text-lg md:text-xl mb-10">Bạn có muốn nhận nó không nào?</p>
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-6">
+                <button id="accept-gift-button" class="flex items-center justify-center gap-3 bg-pink-500 text-white font-bold py-4 px-8 w-full sm:w-auto rounded-full hover:bg-pink-600 transition-all transform hover:scale-105 text-lg">
+                    🎁 Dạ có ạ!
+                </button>
+                <button id="deny-gift-button" class="flex items-center justify-center gap-3 bg-gray-200 text-gray-700 font-bold py-4 px-8 w-full sm:w-auto rounded-full hover:bg-gray-300 text-lg">
+                    ❤️ Thôi, ngại lắm
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="intro-screen" class="min-h-screen w-full hidden flex-col items-center justify-start pt-20 p-4 text-center">
+        <h1 class="text-3xl md:text-5xl font-bold text-pink-700 mb-6">Gửi những đoá hoa xinh đẹp nhất của chúng mình💐💖,</h1>
+        <div class="flex flex-col items-center gap-6 mb-8">
+            <div class="flex flex-wrap justify-center items-center gap-6">
+                <img src="https://i.postimg.cc/sxJLC21J/nam3.png" alt="Ảnh chàng trai 1" class="w-44 h-44 md:w-64 md:h-64 rounded-full shadow-lg border-4 border-white object-cover">
+                <img src="https://i.postimg.cc/L5SWWP4X/nam2.jpg" alt="Ảnh chàng trai 2" class="w-44 h-44 md:w-64 md:h-64 rounded-full shadow-lg border-4 border-white object-cover">
+                <img src="https://i.postimg.cc/MHwLLBZx/nam1.jpg" alt="Ảnh chàng trai 3" class="w-44 h-44 md:w-64 md:h-64 rounded-full shadow-lg border-4 border-white object-cover">
+            </div>
+            <div class="flex flex-wrap justify-center items-center gap-6">
+                <img src="https://i.postimg.cc/HntN1Lj7/nam4.jpg" alt="Ảnh chàng trai 4" class="w-44 h-44 md:w-64 md:h-64 rounded-full shadow-lg border-4 border-white object-cover">
+                <img src="https://i.postimg.cc/8PBvJT4R/Thi-t-k-ch-a-c-t-n-5.png" alt="Ảnh chàng trai 5" class="w-44 h-44 md:w-64 md:h-64 rounded-full shadow-lg border-4 border-white object-cover">
+            </div>
+        </div>
+        <p class="text-lg md:text-xl max-w-2xl mx-auto text-pink-800 mb-8">
+            Có lẽ hôm nay, chúng mình không thể ở cạnh để trao cho các cậu những món quà xinh xắn “made by chúng mình” như những ngày tháng chúng ta còn là những học sinh dưới mái trường “Vàng”. Chúng mình đã ước rằng nếu chúng mình có được túi thần kỳ của Doraemon để có thể vượt qua khoảng cách địa lý để đến tặng quà cho các cậu ngay và luôn! . Nhưng không sao với tình cảm mà chúng mình dành cho các cậu thì không có cái gì cản lại được. Đây là một món quà được tạo ra bởi nguyên liệu chính là 100% tấm lòng, được nêm nếm thêm rất nhiều sự trân quý, tình cảm. Nó có thể là vô hình nhưng tình cảm bên trong thì chắc chắn sẽ “siêu to khổng lồ” đó nha. Lưu ý khi mở ra hãy cẩn thận kẻo “độ đáng yêu” sẽ trốn chạy đi mất tiêu đấy!💖
+        </p>
+        <div class="flex justify-center mt-4">
+            <button id="continue-to-main-button" class="flex items-center gap-2 bg-pink-500 text-white font-bold py-3 px-8 rounded-full hover:bg-pink-600 transition-all transform hover:scale-105">
+                Tiếp tục sự đáng iu này ✨
+           </button>
+       </div>
+    </div>
+
+    <div id="home-screen" class="min-h-screen w-full hidden flex-col items-center justify-center p-4 text-center">
+        <h1 class="text-4xl md:text-6xl font-bold text-pink-600 mb-4 animate-pulse">
+            Happy Women's Day!
+            <span class="block text-lg md:text-2xl font-medium text-pink-800 mt-2">Gửi những bông hoa xinh đẹp nhất của nhóm</span>
+        </h1>
+        <p class="text-lg md:text-xl mb-8 text-pink-800 max-w-2xl mx-auto">
+            Chúng mình muốn gửi lời chúc ngọt ngào nhất đến những bông hoa rực rỡ của nhóm. Cảm ơn các cậu đã đến và tô điểm cho những năm tháng thanh xuân của chúng mình thêm tươi vui, ý nghĩa và ấm áp. 🥰
+        </p>
+        <div id="memories-gallery" class="relative w-full h-52 md:h-64 flex justify-center items-center mb-10">
+            <p class="text-gray-500">Đang tải ảnh kỷ niệm...</p>
+        </div>
+        <p class="font-semibold text-xl mb-6 text-pink-600 max-w-2xl mx-auto">
+            Và bây giờ, hãy chọn lấy một món quà dành riêng cho mình nhé. 👇 Mỗi một món quà là một lời nhắn gửi chân thành từ trái tim chúng mình. 💖
+        </p>
+        <div id="fan-container" class="relative w-full h-72 flex justify-center items-end mt-40"></div>
+    </div>
+    
+    <div id="heart-fill-screen" class="min-h-screen w-full hidden flex-col items-center justify-center p-4 text-center transition-all duration-700 ease-in-out">
+        <div id="falling-hearts-container" class="absolute top-0 left-0 w-full h-full overflow-hidden z-0"></div>
+        <div class="relative z-10">
+             <h1 id="heart-title" class="text-2xl md:text-3xl text-pink-700 font-bold mb-6">Chạm vào trái tim để mở khoá bí mật nhé!</h1>
+             <div id="heart-svg-container" class="cursor-pointer mx-auto w-64 h-64 md:w-80 md:h-80">
+                 <svg id="heart-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-full h-full">
+                     <defs>
+                         <clipPath id="heart-clip">
+                             <rect id="clip-rect" x="0" y="24" width="24" height="24" />
+                         </clipPath>
+                     </defs>
+                     <g>
+                         <path fill="#e5e7eb" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                         <path fill="#ef4444" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" clip-path="url(#heart-clip)"/>
+                     </g>
+                 </svg>
+            </div>
+        </div>
+    </div>
+
+    <div id="wish-screen" class="min-h-screen w-full hidden flex-col items-center justify-center p-6 md:p-12">
+        <p id="wish-prompt" class="text-2xl text-white font-semibold mb-8 text-center animate-pulse">Bạn có một lá thư mới!</p>
+        <div id="envelope-container">
+            <div id="envelope-back"></div>
+            <div id="envelope-flap"></div>
+        </div>
+        <div id="wish-card" class="absolute bg-white/90 rounded-2xl shadow-2xl p-6 md:p-10 w-full max-w-[85vw]">
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-12 items-center">
+                <div class="flex flex-col items-center text-center md:col-span-2">
+                    <img id="wish-image" src="" alt="Ảnh cá nhân" class="w-full h-auto max-h-[70vh] object-contain rounded-xl shadow-lg mb-6">
+                    <div class="text-4xl space-x-4"><span>💖</span><span>✨</span><span>🌸</span><span>😊</span></div>
+                </div>
+                <div class="flex flex-col justify-center md:col-span-3">
+                    <h2 id="wish-title" class="text-3xl font-bold text-pink-600 mb-4 text-center"></h2>
+                    <div id="wish-text" class="text-xl space-y-4"></div>
+                    <div class="flex flex-wrap gap-4 mt-8">
+                        <button id="finish-reading-btn" class="bg-pink-500 text-white font-bold py-3 px-6 rounded-full hover:bg-pink-600 transition-all self-start">Bọn mình đọc xong rồi!</button>
+                        <button id="generate-ai-wish-btn" class="bg-purple-500 text-white font-bold py-3 px-6 rounded-full hover:bg-purple-600 transition-all self-start">✨ Nhận lời chúc AI ✨</button>
+                    </div>
+                    <div id="ai-wish-container" class="hidden mt-6 p-4 bg-pink-100/50 rounded-lg border-l-4 border-pink-400">
+                        <div id="ai-wish-loading" class="loader"></div>
+                        <p id="ai-wish-result" class="text-pink-700 italic" style="white-space: pre-wrap;"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="thank-you-screen" class="min-h-screen w-full hidden flex-col items-center justify-start pt-24 p-6 text-center relative">
+        <div class="absolute inset-0 bg-black bg-opacity-30"></div>
+        <div class="bg-white/80 backdrop-blur-sm rounded-2xl shadow-2xl p-8 md:p-12 w-full max-w-5xl text-gray-800 transform transition-all duration-500 scale-95 opacity-0 relative z-10">
+            <h2 class="relative text-4xl md:text-5xl font-bold text-pink-600 mb-10">
+                <span class="absolute -top-5 -left-8 text-4xl text-pink-400 opacity-80 animate-pulse">💖</span>
+                Cảm ơn các bạn!
+                <span class="absolute -bottom-5 -right-8 text-3xl text-amber-300 opacity-80 animate-ping" style="animation-delay: 0.5s;">✨</span>
+            </h2>
+            <div class="text-xl md:text-2xl max-w-4xl mx-auto mb-10 text-left space-y-4">
+                <p>Có lẽ giữa hàng triệu người ngoài kia, việc chúng ta gặp được nhau, trở thành bạn bè và cùng nhau đi qua những năm tháng rực rỡ nhất của tuổi trẻ, chính là nhờ một cái “duyen” thật diệu kì.</p>
+                <p>Cảm ơn các cậu, những mảnh ghép không thể thiếu, đã đến và tô điểm thêm cho bức tranh thanh xuân của chúng mình thêm rực rỡ, trọn vẹn. Cảm ơn những lần giúp đỡ, những lời động viên và cả những khoảng khắc vui buồn mà chúng ta đã cùng sẻ chia.</p>
+                <p>Chúng mình mong rằng sợi dây duyên phận này sẽ mãi bền chặt để sau này nhìn lại chúng ta đều có thể mỉm cười thật tươi, thật hạnh phúc vì đã có nhau trong những năm tháng đẹp nhất của cuộc đời.</p>
+                <i class="block text-center italic my-6">
+                    “Nơi đẹp nhất là nơi chúng ta chưa từng đi qua<br>
+                    Khoảng thời gian đẹp nhất là khoảng thời gian không thể quay trở lại”
+                </i>
+                <div class="text-right pr-8 md:pr-12">
+                    <p>Yêu thương💖💖</p>
+                    <p>Những chàng trai của các cậu…</p>
+                </div>
+            </div>
+            </div>
+        <div class="absolute bottom-0 left-0 w-full pb-12 z-10">
+            <div class="w-full overflow-hidden">
+                <div id="mini-carousel-track" class="flex"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="image-modal" class="hidden fixed inset-0 bg-black bg-opacity-80 z-50 flex items-center justify-center p-4 transition-opacity duration-300">
+        <button id="modal-close-btn" class="absolute top-4 right-6 text-white text-5xl font-bold hover:text-pink-300 transition-colors z-[60]">&times;</button>
+        <div class="relative w-full h-full flex items-center justify-center">
+             <img id="modal-image" src="" alt="Ảnh kỷ niệm phóng to" class="max-w-[95vw] max-h-[95vh] object-contain rounded-lg shadow-lg">
+        </div>
+    </div>
+
+<script>
+    // =================================================================
+    // DỮ LIỆU
+    // =================================================================
+    const girlsData = [
+        { id: 1, name: "Bảo Trân", avatar: "https://i.postimg.cc/cJ8p2hcn/7.png", flowerEmoji: "🌸", wishes: [ { text: "Bảo Trân à, có người đã ví rằng mỗi cô gái đều là một bông hoa và với chúng mình cậu cũng chính là một đóa hướng dương xinh đẹp và đặc biệt.\nMỗi đóa hoa hướng dương luôn thể hiện được sự mạnh mẽ, vẻ đẹp đầy sức sống và cuốn hút và cậu cũng là một người như vậy. Điều đặc biệt là cậu luôn có một nét \"duyên\" ngầm, một vẻ đẹp rất riêng mà không ai có được như sự nổi bật của hướng dương trong một vườn hoa✨\nChúng mình thật sự rất trân trọng một người bạn như cậu, từ nụ cười, ánh mắt, sự quan tâm đến mọi người. Tất cả những điều đó đã tạo nên sự đáng mến và hôm nay chính là ngày để tôn vinh, yêu thương và gửi những lời chúc tốt đẹp đến cậu, ngày mà cậu được phái nam trên thế giới này yêu quý, trân trọng và tạo ra những sự bất ngờ.\nNhân ngày 20/10, chúng mình muốn nói rằng cậu thực sự là một món quà quý giá mà cuộc sống đã ban tặng để chúng ta có thể gặp nhau và chơi cùng nhau ở khoảng thanh xuân của mỗi người.\nHãy luôn tự tin và yêu lấy vẻ đẹp riêng có của mình nhé, vì trong mắt bọn mình, cậu và 4 bạn còn lại luôn là những cô gái xinh đẹp nhất mà chúng mình đã từng tiếp xúc. Hãy luôn giữ mãi nét rạng ngời, trong trẻo này nhé.\nChúc cho đóa hoa của chúng mình có một ngày 20/10 thật hạnh phúc, nhiều niềm vui, được bao quanh bởi những lời chúc ngọt ngào, yêu thương chân thành nhất cũng như hãy luôn luôn tích cực như vậy nhé! Cậu xứng đáng nhận được những điều tốt đẹp nhất🥰💐" }]},
+        { id: 2, name: "Diệu Hiền", avatar: "https://i.postimg.cc/sxfpPz70/Thi-t-k-ch-a-c-t-n-3.png", flowerEmoji: "🌺", wishes: [ { text: "Nhân dịp 20/10, tụi mình muốn gửi đến Hiền một món quà nhỏ cùng vài dòng lời chúc thật chân thành. Cảm ơn Diệu Hiền vì đã luôn là một người bạn dễ thương, vui tính và nhiệt tình trong nhóm. Chắc ở xa nhà nên cũng có lúc nhớ nhà, nhớ bạn bè, nhưng tụi mình mong rằng món quà nhỏ này sẽ làm Hiền thấy ấm lòng hơn một chút. Hy vọng sau này, dù có mỗi đứa đi một hướng, tụi mình vẫn sẽ giữ được tình bạn vui vẻ, thoải mái như bây giờ. Chúc Hiền ngày 20/10 thật vui và ý nghĩa! Chúc Hiền luôn học giỏi, khỏe mạnh, gặp nhiều may mắn và ngày càng tự tin trên con đường mình chọn. Mong món quà nhỏ này sẽ là một lời nhắn gửi rằng: ở đâu đó, luôn có những người bạn trân trọng và yêu quý Hiền thật lòng. 💐" } ] },
+        { id: 3, name: "Hiếu Ngân", avatar: "https://i.postimg.cc/cJn8J9wr/5.png", flowerEmoji: "🌷", wishes: [ { text: "Chúc Hồ Hiếu Ngân của tụi bạn 1 ngày 20/10 ý nghĩa.\nTrải qua gần 10 năm tình bạn chúng ta cũng đã quá hiểu nhau rồi nên t ko muốn lói quá nhiều chỉ muốn chúc m ngày càng xinh đẹp, nhiều sức khỏe để đi chơi vs tụi t khi tụi t về, nhiều may mắn.\nCuối cùng xin cảm HHN đã đồng hành cùng tụi b qua 10 năm và có nhiều kỉ niệm đẹp, cảm ơn đã là 1 phần thanh Xuân tuyệt vời của XPM" } ] },
+        { id: 4, name: "Thanh Thảo", avatar: "https://i.postimg.cc/xCVNNv3G/6.png", flowerEmoji: "🌼", wishes: [ { text: "Gửi Thảo thương mến,\nNếu ví Thảo như một loài hoa, kỳ thực phải dùng cả bách hoa Đông Tây kim cổ để làm nền soi chiếu. Có lẽ Thảo như đóa Hồng Nhung kiều diễm, kiêu sa trong vườn thơ Pháp, e ấp, mềm mại giữa sương mai. Có hay Thảo là bông Mẫu Đơn ngọc ngà trong vườn thủy mặc, thanh tao mà đằm thắm, dịu dàng.  Phải chăng Thảo nhẹ nhàng tựa nhành liễu đung đưa nơi góc hồ trăng tỏ, lại như nhành bông Đỗ Quyên rực rỡ tỏa sắc giữa núi rừng hoa ban trắng xóa. Tất cả chẳng thể nói hết cái nhìn về Thảo.\nNhìn Thảo, “chúng mình” thấy cả mùa thu nước Áo trong đôi mắt biếc, và cả trăng non đất Việt trên vành môi cười. Giọng nói Thảo tựu khúc dương cầm du dương giữa phố cổ, lại là điệu hát ru êm ái bên mái hiên nhà. Thảo đẹp như nàng thơ của thi sĩ, nhưng cũng mạnh mẽ đầy diễm lệ như nàng Thị Lan của chàng Vĩnh Thụy.\nNhân ngày 20/10, ngày tôn vinh vẻ đẹp của phụ nữ Việt, “chúng mình” chỉ dám thầm gửi những lời này như những con chiêng muốn tiến về với đức mẹ. Chúc em Thảo –  đóa hoa kết tinh tinh hoa đất trời, luôn giữ mãi nét e ấp thuở ban đầu, sự năng động vốn có, để đời mãi ngỡ ngàng trước vẻ đẹp hội tụ hai phương trời ấy.\nThương và mãi nhớ về Thảo dẫu có vắng mặt hay  xa cách đến vạn trùng đại dương," } ] },
+        { id: 5, name: "Khánh Xuân", avatar: "https://i.postimg.cc/q7CPSwGv/8.png", flowerEmoji: "🌹", wishes: [ { text: "20/10 tới rồi nè 🌸\n Một ngày đặc biệt để mấy đứa con trai tụi mình dành lời chúc và sự trân trọng cho những người con gái quanh mình — những người luôn mạnh mẽ, kiên nhẫn và biết cách làm cho cuộc sống trở nên vui hơn mỗi ngày. Và tất nhiên, không thể thiếu lời chúc gửi đến Xuân 😌\nXuân lúc nào cũng là người dễ thương, vui vẻ và có năng lượng riêng mà ai chơi cùng cũng thấy thoải mái. Dù có lúc hơi “quay xe” tí 😆 nhưng đó cũng là một phần đáng yêu của Xuân. Hy vọng Xuân sẽ luôn giữ được vibe đó — nhẹ nhàng, tích cực, và ngày càng xinh hơn như bây giờ 🌷\nChúc Khánh Xuân có một ngày 20/10 thật nhiều niềm vui, luôn giữ nụ cười và sống thật chill. Hãy yêu bản thân hơn mỗi ngày, vì Xuân xứng đáng với những điều tốt đẹp nhất 💫 Quá khứ khép lại rồi thì cứ để nó ở đó, đừng quay lại nữa. Cứ mở lòng ra, đón nhận những điều mới, vì chắc chắn tương lai sẽ có nhiều niềm vui, những người tốt và cơ hội mới đang chờ Xuân ở phía trước 🌻" } ] }
+    ];
+    const memoriesImages = ["https://i.postimg.cc/nrMkVH7M/55d7f5ab-8263-48c7-9448-a2621d0a7403.jpg", "https://i.postimg.cc/x87PcWy3/ea2374ee-7e72-4210-a95a-db3cf358c226.jpg", "https://i.postimg.cc/HkvfLj3H/kiniem1.jpg", "https://i.postimg.cc/cLLpZfRw/kiniem3.jpg", "https://i.postimg.cc/HkkqHbwQ/kiniem4.jpg", "https://i.postimg.cc/SR4PP9QY/kiniem5.jpg", "https://i.postimg.cc/ncHsbKk5/kiniem6.jpg", "https://i.postimg.cc/brPZv1jT/kiniem7.jpg", "https://i.postimg.cc/fyvJSkwP/kiniem8.jpg", "https://i.postimg.cc/c4XvsKkL/kiniem9.jpg", "https://i.postimg.cc/28zqRdGV/kiniem10.jpg", "https://i.postimg.cc/pXqm29cm/kiniem11.jpg", "https://i.postimg.cc/BbtgZqDZ/06ea8e60-613d-4f25-992c-6600b3fd59f2.jpg", "https://i.postimg.cc/cLLpZfRR/kiniem2.jpg", "https://i.postimg.cc/0jrf58my/9955b916-7bd5-4421-b459-9ad50cfb1462.jpg", "https://i.postimg.cc/c15h9nyd/aa865569-8ca9-4533-a768-57a0b910416d.jpg", "https://i.postimg.cc/rszJy8Wm/cfddc74e-832b-4cac-8204-190efb7e2c7e.jpg", "https://i.postimg.cc/zvMkV9Sn/eaa7c261-7eed-421b-bf3b-8b7a60913617.jpg", "https://i.postimg.cc/RCbdsH56/f28234cd-d333-4b46-a0e9-af225ed58e44.jpg", "https://i.postimg.cc/BbyCXdcF/f3be936f-5eb8-47c7-88cc-54531f8fed44.jpg", "https://i.postimg.cc/BZwpYK94/f54f052f-292a-4168-b035-6ed1965b6f74.jpg", "https://i.postimg.cc/BZwpYK9W/f66b995b-0b60-4791-bd28-86e2fc5d7313.jpg"];
+    
+    const API_KEY = "AIzaSyAZmEeoKadecC3SH86yH0vk6AZNy5kfgrs"; 
+    const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${API_KEY}`;
+    const fallingFlowers = ['🌸', '🌺', '🌷', '💖', '✨', '🌼', '🌹'];
+
+    // =================================================================
+    // CÁC HÀM TIỆN ÍCH
+    // =================================================================
+    function setupMemoriesGallery() {
+        const galleryContainer = document.getElementById('memories-gallery');
+        const imageModal = document.getElementById('image-modal');
+        const modalImage = document.getElementById('modal-image');
+        const modalCloseBtn = document.getElementById('modal-close-btn');
+        galleryContainer.innerHTML = '';
+        const galleryImages = memoriesImages.slice(0, 5); 
+        const numImages = galleryImages.length;
+        const centerIndex = Math.floor(numImages / 2);
+        galleryImages.forEach((src, index) => {
+            const container = document.createElement('div');
+            container.className = 'memory-photo-container';
+            const img = document.createElement('img');
+            img.src = src;
+            img.alt = `Kỷ niệm ${index + 1}`;
+            img.className = 'memory-photo w-44 md:w-56 h-auto';
+            
+            const angleSpread = 5;
+            const horizontalSpread = window.innerWidth < 768 ? 130 : 180;
+            
+            const angle = (index - centerIndex) * angleSpread;
+            const xOffset = (index - centerIndex) * horizontalSpread;
+            const originalZIndex = numImages - Math.abs(index - centerIndex);
+            const originalTransform = `translateX(${xOffset}px) rotate(${angle}deg)`;
+            const hoverTransform = `translateX(${xOffset}px) rotate(${angle}deg) scale(1.1) translateY(-15px)`;
+            
+            container.style.transform = originalTransform;
+            container.style.zIndex = originalZIndex;
+            container.addEventListener('mouseenter', () => { container.style.transform = hoverTransform; container.style.zIndex = 50; });
+            container.addEventListener('mouseleave', () => { container.style.transform = originalTransform; container.style.zIndex = originalZIndex; });
+            container.appendChild(img);
+            galleryContainer.appendChild(container);
+            container.addEventListener('click', () => { modalImage.src = src; imageModal.classList.remove('hidden'); });
+        });
+        const closeModal = () => { imageModal.classList.add('hidden'); modalImage.src = ''; };
+        modalCloseBtn.addEventListener('click', closeModal);
+        imageModal.addEventListener('click', (e) => { if (e.target.id === 'image-modal') { closeModal(); } });
+    }
+
+    function setupThankYouCarousel() {
+        const track = document.getElementById('mini-carousel-track');
+        if (!track) return;
+        track.innerHTML = '<p class="text-white/80 text-center w-full">Đang tải kỷ niệm...</p>';
+        const imagesToAppend = [...memoriesImages, ...memoriesImages];
+        const loadPromises = imagesToAppend.map(src => new Promise((resolve, reject) => {
+            const img = new Image();
+            img.src = src;
+            img.onload = () => resolve(img);
+            img.onerror = () => reject(new Error(`Lỗi tải ảnh: ${src}`));
+        }));
+        Promise.all(loadPromises).then(loadedImages => {
+            track.innerHTML = '';
+            loadedImages.forEach(img => track.appendChild(img));
+            track.classList.add('animate-scroll');
+        }).catch(error => {
+            console.error("Không thể tải ảnh cho carousel:", error);
+            track.innerHTML = '<p class="text-red-400 text-center w-full">Lỗi tải ảnh kỷ niệm.</p>';
+        });
+    }
+
+    async function generateAiWish(name) {
+        const prompt = `Hãy viết một bài thơ ngắn khoảng 4-6 câu, hoặc một lời chúc thật ý nghĩa và sáng tạo để chúc mừng ngày Phụ nữ Việt Nam 20/10 cho người bạn tên là "${name}". Hãy dùng giọng văn thân thiện, ấm áp, nhấn mạnh rằng cô ấy là một người bạn tuyệt vời và là một phần quan trọng của nhóm.`;
+        const payload = { contents: [{ parts: [{ text: prompt }] }] };
+        try {
+            const response = await fetch(API_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+            if (!response.ok) throw new Error(`API error: ${response.statusText}`);
+            const result = await response.json();
+            return result.candidates?.[0]?.content?.parts?.[0]?.text || "Rất tiếc, AI không thể nghĩ ra lời chúc lúc này. Nhưng bạn vẫn là người tuyệt vời nhất!";
+        } catch (error) {
+            console.error("Lỗi khi gọi API (đã được thay bằng thông báo tùy chỉnh):", error);
+            return "Ơ kìa, tụi mình chúc bằng cả tấm lòng mà vẫn chưa đủ đô sao? AI làm sao có 'tình cảm' được như tụi mình chứ! 😉";
+        }
+    }
+
+    function typeWriterEffect(element, text, delay = 30) {
+       let i = 0;
+       element.innerHTML = '';
+       function type() {
+           if (i < text.length) {
+               element.innerHTML += text.charAt(i);
+               i++;
+               setTimeout(type, delay);
+           }
+       }
+       type();
+    }
+    
+    // =================================================================
+    // LOGIC CHÍNH
+    // =================================================================
+    document.addEventListener('DOMContentLoaded', () => {
+        const giftScreen = document.getElementById('gift-screen'), introScreen = document.getElementById('intro-screen'), homeScreen = document.getElementById('home-screen'), wishScreen = document.getElementById('wish-screen'), thankYouScreen = document.getElementById('thank-you-screen');
+        const fanContainer = document.getElementById('fan-container'), finishReadingBtn = document.getElementById('finish-reading-btn'), generateAiWishBtn = document.getElementById('generate-ai-wish-btn');
+        const aiWishContainer = document.getElementById('ai-wish-container'), aiWishLoading = document.getElementById('ai-wish-loading'), aiWishResult = document.getElementById('ai-wish-result');
+        const fallingFlowerContainer = document.getElementById('falling-flower-container'), giftCard = document.getElementById('gift-card'), acceptGiftBtn = document.getElementById('accept-gift-button'), denyGiftBtn = document.getElementById('deny-gift-button');
+        const continueToMainBtn = document.getElementById('continue-to-main-button'), backgroundMusic = document.getElementById('background-music');
+        const heartFillScreen = document.getElementById('heart-fill-screen');
+        const heartSvgContainer = document.getElementById('heart-svg-container');
+        const clipRect = document.getElementById('clip-rect');
+        const heartTitle = document.getElementById('heart-title');
+        const heartsContainer = document.getElementById('falling-hearts-container');
+        
+        let selectedGirlId = null;
+        backgroundMusic.volume = 0.75;
+
+        setupMemoriesGallery();
+        setupThankYouCarousel();
+
+        acceptGiftBtn.addEventListener('click', () => {
+            giftScreen.classList.add('hidden');
+            introScreen.classList.remove('hidden');
+            introScreen.classList.add('flex');
+        });
+        
+        let denyClickCount = 0;
+        denyGiftBtn.addEventListener('click', () => {
+            denyClickCount++;
+            if (denyClickCount === 1) {
+                giftCard.querySelector('h2').textContent = 'Ơ... Thật sự không muốn nhận thật à! ';
+                giftCard.querySelector('p').textContent = 'Bọn mình đã giành rất nhiều tâm huyết và công sức vào món quà này đấy. Nhận đi cho bọn mình vui mà';
+                acceptGiftBtn.textContent = '🎁 Okii, nhận nè!';
+                acceptGiftBtn.classList.add('animate-pulse');
+                denyGiftBtn.textContent = 'Đã bảo không là không! 😤';
+            } else {
+                if (denyGiftBtn.style.position !== 'fixed') {
+                    const rect = denyGiftBtn.getBoundingClientRect();
+                    denyGiftBtn.style.position = 'fixed';
+                    denyGiftBtn.style.left = `${rect.left}px`;
+                    denyGiftBtn.style.top = `${rect.top}px`;
+                    denyGiftBtn.style.zIndex = '10000';
+                }
+                const maxX = window.innerWidth - denyGiftBtn.offsetWidth, maxY = window.innerHeight - denyGiftBtn.offsetHeight;
+                const randomX = Math.floor(Math.random() * maxX), randomY = Math.floor(Math.random() * maxY);
+                denyGiftBtn.style.left = `${randomX}px`;
+                denyGiftBtn.style.top = `${randomY}px`;
+            }
+        });
+        
+        continueToMainBtn.addEventListener('click', () => {
+            introScreen.classList.add('hidden');
+            homeScreen.classList.remove('hidden');
+            homeScreen.classList.add('flex');
+        });
+
+        function showWishCard(girlId) {
+            const girl = girlsData.find(g => g.id === parseInt(girlId));
+            if (!girl) return;
+
+            const wishTitleElement = document.getElementById('wish-title');
+            wishTitleElement.textContent = `Gửi ${girl.name},`;
+            
+            document.getElementById('wish-image').src = girl.avatar;
+            const wishTextContainer = document.getElementById('wish-text');
+            wishTextContainer.innerHTML = '';
+            
+            girl.wishes.forEach(wish => {
+                const p = document.createElement('p');
+                let wordCounter = 0;
+                const parts = wish.text.split(/(\s+)/);
+                parts.forEach(part => {
+                    if (part.trim() !== '') {
+                        const wordSpan = document.createElement('span');
+                        wordSpan.textContent = part;
+                        wordSpan.className = 'word-fall-in';
+                        wordSpan.style.animationDelay = `${wordCounter * 0.05}s`;
+                        p.appendChild(wordSpan);
+                        wordCounter++;
+                    } else {
+                        const spaceSpan = document.createElement('span');
+                        spaceSpan.textContent = part;
+                        spaceSpan.style.whiteSpace = 'pre-wrap';
+                        p.appendChild(spaceSpan);
+                    }
+                });
+                wishTextContainer.appendChild(p);
+            });
+
+            generateAiWishBtn.dataset.girlId = girlId;
+            aiWishContainer.classList.add('hidden');
+            aiWishResult.textContent = '';
+            
+            wishScreen.classList.remove('hidden', 'open');
+            wishScreen.classList.add('flex');
+            
+            let envelopeContainer = document.getElementById('envelope-container');
+            const newEnvelopeContainer = envelopeContainer.cloneNode(true);
+            envelopeContainer.parentNode.replaceChild(newEnvelopeContainer, envelopeContainer);
+            newEnvelopeContainer.addEventListener('click', () => wishScreen.classList.add('open'), { once: true });
+            
+            window.scrollTo(0, 0);
+        }
+
+        function displayWishFor(girlId) {
+            selectedGirlId = girlId;
+            homeScreen.classList.add('hidden');
+            heartFillScreen.classList.remove('hidden');
+            heartFillScreen.classList.add('flex');
+            resetHeartAnimation();
+        }
+
+        girlsData.forEach((girl, index) => {
+            const angle = (index - (girlsData.length - 1) / 2) * 15;
+            const container = document.createElement('div');
+            container.className = 'girl-card-container';
+            container.style.setProperty('--flower-emoji', `'${girl.flowerEmoji}'`);
+            container.style.transform = `rotate(${angle}deg)`;
+            container.style.zIndex = girlsData.length - Math.abs(index - (girlsData.length - 1) / 2);
+
+            const girlCard = document.createElement('img');
+            girlCard.src = girl.avatar;
+            girlCard.alt = `Ảnh của ${girl.name}`;
+            girlCard.className = 'girl-card';
+            girlCard.addEventListener('click', () => displayWishFor(girl.id));
+            
+            container.appendChild(girlCard);
+            fanContainer.appendChild(container);
+        });
+
+        const totalProgress = 100;
+        let currentProgress = 0;
+        let physicalClickCount = 0;
+        const svgHeight = 24;
+
+        function createFallingHeart() {
+            const heart = document.createElement('div');
+            heart.innerHTML = '❤️';
+            heart.classList.add('falling-heart');
+            heart.style.left = `${Math.random() * 100}vw`;
+            heart.style.animationDuration = `${Math.random() * 2 + 3}s`;
+            heart.style.fontSize = `${Math.random() * 1.5 + 0.5}rem`;
+            heart.style.opacity = Math.random() * 0.7 + 0.3;
+            heartsContainer.appendChild(heart);
+            setTimeout(() => { heart.remove(); }, 5000);
+        }
+
+        function resetHeartAnimation() {
+            currentProgress = 0;
+            physicalClickCount = 0;
+            clipRect.setAttribute('y', svgHeight);
+            heartTitle.textContent = 'Chạm vào trái tim để nhận món quà này nhé!';
+            heartFillScreen.classList.remove('fade-out');
+        }
+
+        heartSvgContainer.addEventListener('click', () => {
+            if (currentProgress >= totalProgress) return;
+
+            for(let i = 0; i < 5; i++) { createFallingHeart(); }
+            physicalClickCount++;
+            
+            if (currentProgress < 7) {
+                // Giai đoạn rất chậm: tăng 1 đơn vị mỗi lần click
+                currentProgress += 1;
+            } else {
+                // Giai đoạn siêu nhanh: gia số lớn và tăng nhanh dần
+                let increment = 4 + Math.floor((currentProgress - 7) / 5);
+                currentProgress += increment;
+            }
+            
+            currentProgress = Math.min(currentProgress, totalProgress); // Đảm bảo không vượt quá 100
+            
+            const newY = svgHeight - (svgHeight * (currentProgress / totalProgress));
+            clipRect.setAttribute('y', newY);
+
+            if (physicalClickCount === 5) heartTitle.textContent = "Món quà đang được đóng gói một cách chỉnh chu nhất...";
+            else if (physicalClickCount === 10) heartTitle.textContent = "Sắp xong rồi, cố lên một chút nữa thôi!";
+            else if (currentProgress > 75) heartTitle.textContent = "Sắp mở được quà rồi đấy!Có hồi hộp không nào ?";
+
+            if (currentProgress >= totalProgress) {
+                heartTitle.textContent = 'Món quà đã được đóng gói thành công!';
+                setTimeout(() => {
+                    heartFillScreen.classList.add('fade-out');
+                    setTimeout(() => {
+                        heartFillScreen.classList.add('hidden');
+                        heartFillScreen.classList.remove('flex');
+                        if (selectedGirlId) {
+                            showWishCard(selectedGirlId);
+                        }
+                    }, 700);
+                }, 1000);
+            }
+        });
+
+        finishReadingBtn.addEventListener('click', () => {
+            wishScreen.classList.add('hidden');
+            wishScreen.classList.remove('flex', 'open');
+            thankYouScreen.classList.remove('hidden');
+            thankYouScreen.classList.add('flex');
+            setTimeout(() => {
+                const thankYouCard = thankYouScreen.querySelector('.bg-white\\/80');
+                thankYouCard.classList.remove('scale-95', 'opacity-0');
+            }, 100);
+            backgroundMusic.play().catch(e => console.log("Trình duyệt không cho phép tự động phát nhạc."));
+        });
+
+        generateAiWishBtn.addEventListener('click', async () => {
+            const girlId = generateAiWishBtn.dataset.girlId;
+            const girl = girlsData.find(g => g.id === parseInt(girlId));
+            if(!girl) return;
+            aiWishContainer.classList.remove('hidden');
+            aiWishResult.classList.add('hidden');
+            aiWishLoading.classList.remove('hidden');
+            generateAiWishBtn.disabled = true;
+            generateAiWishBtn.classList.add('opacity-50');
+            const wish = await generateAiWish(girl.name);
+            aiWishLoading.classList.add('hidden');
+            aiWishResult.classList.remove('hidden');
+            typeWriterEffect(aiWishResult, wish, 30);
+            generateAiWishBtn.disabled = false;
+            generateAiWishBtn.classList.remove('opacity-50');
+        });
+        
+        // Block code cho nút restart đã bị xóa
+    });
+</script>
+
+</body>
+</html>
